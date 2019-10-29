@@ -1,0 +1,38 @@
+﻿@page
+@using ThreePage.Services
+
+@inject IDepartmentService departmentService
+
+<div class="row">
+    <div class="col-md-10 offset-md-2">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Employee Count</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(x => x.Departments)
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="co-md-4">
+        <a asp-page="Department/AddDepartment">Add</a>
+    </div>
+</div>
+
+@functions{
+    public IEnumerable<ThreePage.Models.Department> Departments { get; set; }
+
+    // OnGet或OnGetAsync会处理Get请求
+    public async Task OnGetAsync()
+    {
+        Departments = await departmentService.GetAll();
+    }
+}

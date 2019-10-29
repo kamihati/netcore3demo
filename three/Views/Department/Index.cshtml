@@ -1,0 +1,27 @@
+﻿@using Three.Models
+
+@model  IEnumerable<Department>
+
+<div class="row">
+    <div class="col-md-10 offset-md-2">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Employee Count</th>
+                <th>操作</th>
+            </tr>
+            @Html.DisplayForModel()
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-2">
+        @await Component.InvokeAsync("CompanySummary", new {title="部门列表页的汇总" })
+        <vc:company-summary title="部门列表汇总2"></vc:company-summary>
+    </div>
+    <div class="col-md-4">
+        <a asp-action="Add">添加</a>
+    </div>
+</div>

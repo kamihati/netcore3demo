@@ -1,0 +1,48 @@
+﻿@page
+@using Microsoft.AspNetCore.Mvc.RazorPages
+@using Services;
+@using Models;
+
+@model EmployeeListModel
+
+<div class="row">
+    <div class="col-md-10 offset-md-2">
+        <table class="table">
+            <tr>
+                <th>FirstName</th>
+                <th>LastName</th>
+                <th>Gender</th>
+                <th>Fired</th>
+                <th>操作</th>
+            </tr>
+            @Html.DisplayFor(x => x.Employees)
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 offset-md-2">
+        <a asp-page="Employee/AddEmployee" asp-route-departmentId="@ViewBag.DepartmentId">添加</a>
+    </div>
+</div>
+
+@functions{
+    public class EmployeeListModel : PageModel
+    {
+
+        private readonly IEmployeeService _employeeService;
+
+        public EmployeeListModel(IEmployeeService employeeService)
+        {
+            _employeeService = employeeService;
+        }
+
+        public IEnumerable<Employee> Employees { get; set; }
+
+        public async Task OnGet(int departmentId)
+        {
+            Employees = await _employeeService.GetByDepartmentId(departmentId);
+            ViewData["DepartmentId"] = departmentId;
+        }
+    }
+}
